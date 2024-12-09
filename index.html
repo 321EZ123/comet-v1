@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>pxlnova</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      font-family: 'Arial', sans-serif;
+      color: #fff;
+      background: black;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('https://cdn.discordapp.com/attachments/1281410605680562311/1315647998625058897/image.png?ex=67582c2e&is=6756daae&hm=e9c3163a870186acf1698e0c27578cca69f88f97b9c842e151640567c98a157d&') no-repeat center center/cover;
+      z-index: -2;
+    }
+
+    .stars {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      z-index: -1;
+    }
+    .stars div {
+      position: absolute;
+      background: white;
+      width: 2px;
+      height: 2px;
+      border-radius: 50%;
+      box-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
+      animation: move-stars 20s linear infinite;
+    }
+
+    @keyframes move-stars {
+      from {
+        transform: translateY(0);
+      }
+      to {
+        transform: translateY(-100vh);
+      }
+    }
+
+    .center-content {
+      position: absolute;
+      top: 48%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+    }
+    h1 {
+      font-size: 3rem;
+      color: white;
+      text-shadow: 0 0 15px #ffffff, 0 0 30px #ffffff;
+    }
+    h3 {
+      font-size: 1.5rem;
+      margin-top: 20px;
+      color: #aaa;
+      text-shadow: 0 0 10px #800080;
+    }
+
+    .changing-text {
+      display: inline-block;
+      color: #8503ff;
+      text-shadow: 
+        0 0 5px #6200ff, 
+        0 0 5px #6200ff, 
+        0 0 20px #6200ff;
+      font-size: 3rem;
+      height: 3rem;
+      overflow: hidden;
+      vertical-align: top;
+      position: relative;
+      white-space: nowrap;
+      border-right: 2px solid #ff00ff;
+      animation: blink-caret 0.7s step-end infinite;
+    }
+
+    @keyframes blink-caret {
+      50% {
+        border-color: transparent;
+      }
+    }
+
+    .button {
+      margin-top: 20px;
+      background: #6d02f7;
+      color: #fff;
+      border: none;
+      padding: 15px 30px;
+      font-size: 1rem;
+      border-radius: 5px;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 0 20px #4c02f7, 0 0 40px #4c02f7;
+      transition: box-shadow 0.3s ease;
+    }
+    .button:hover {
+      box-shadow: 0 0 30px #4c02f7, 0 0 60px #8502f7;
+    }
+  </style>
+</head>
+<body>
+  <div class="stars" id="stars"></div>
+
+  <div class="center-content">
+    <h1>Welcome to <span class="changing-text" id="changing-text"></span></h1>
+    <h3>A modern web engine to end censorship</h3>
+    <button class="button" id="get-started-button">Get Started</button>
+  </div>
+
+  <script>
+    function generateStars() {
+      const starsContainer = document.getElementById('stars');
+      starsContainer.innerHTML = '';
+      for (let i = 0; i < 150; i++) {
+        const star = document.createElement('div');
+        const size = Math.random() * 3 + 1;
+        star.style.width = `${size}px`;
+        star.style.height = `${size}px`;
+        star.style.top = `${Math.random() * 100}vh`;
+        star.style.left = `${Math.random() * 100}vw`;
+        star.style.animationDuration = `${20 + Math.random() * 10}s`;
+        starsContainer.appendChild(star);
+      }
+    }
+
+    generateStars();
+
+    const changingTextElement = document.getElementById('changing-text');
+    const phrases = ['Space.', 'Freedom.', 'Endless Fun.', 'Privacy.', 'Speed.', 'Amazingness.'];
+    let index = 0;
+    let charIndex = 0;
+
+    function typeText() {
+      if (charIndex < phrases[index].length) {
+        changingTextElement.textContent += phrases[index].charAt(charIndex);
+        charIndex++;
+        setTimeout(typeText, 100);
+      } else {
+        setTimeout(deleteText, 1000);
+      }
+    }
+
+    function deleteText() {
+      if (charIndex > 0) {
+        changingTextElement.textContent = changingTextElement.textContent.slice(0, -1);
+        charIndex--;
+        setTimeout(deleteText, 100);
+      } else {
+        index = (index + 1) % phrases.length;
+        setTimeout(typeText, 500);
+      }
+    }
+
+    typeText();
+
+    const button = document.getElementById('get-started-button');
+    button.addEventListener('click', () => {
+      document.body.style.transition = 'opacity 1s ease';
+      document.body.style.opacity = 0;
+      setTimeout(() => window.location.href = 'terms.html', 1000);
+    });
+  </script>
+</body>
+</html>

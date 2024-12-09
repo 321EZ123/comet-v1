@@ -1,1 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terms and Conditions</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #1a1a1a;
+        }
+
+        #container {
+            background: #333;
+            border-radius: 8px;
+            padding: 12px;
+            width: 90%;
+            max-width: 320px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            color: white;
+            height: 60vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        h1 {
+            color: #fff;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+
+        p {
+            color: #ccc;
+            line-height: 1.4;
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+
+        #terms-content {
+            overflow-y: auto;
+            max-height: 180px;
+            margin-bottom: 15px;
+        }
+
+        button {
+            padding: 8px 15px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 12px;
+            font-size: 14px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .checkbox-container {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+
+        .checkbox-container input {
+            margin-right: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <h1>Terms and Conditions</h1>
+        <div id="terms-content">
+            <p>1. You acknowledge that by accepting these terms, you are solely responsible for any actions you take. The use of our service is entirely at your own risk, and we disclaim all liability.</p>
+            <p>2. By accepting these terms, you waive your right to sue us. Any legal case arising from your actions will be closed.</p>
+            <p>3. Any content you submit using our platform is now allegedly owned by us.</p>
+            <p>4. By accepting, you confirm understanding and agree to these terms.</p>
+        </div>
+
+        <form id="terms-form" action="loading.html" method="get">
+            <div class="checkbox-container">
+                <label><input type="checkbox" id="read-checkbox" name="read" required> I have read the terms and conditions</label>
+                <label><input type="checkbox" id="agree-checkbox" name="agree" required> I agree to the terms and conditions</label>
+            </div>
+
+            <button type="submit" id="agree-button" disabled>Read and Agree</button>
+        </form>
+    </div>
+
+    <script>
+        if (localStorage.getItem('termsAccepted') === 'true') {
+            window.location.href = 'loading.html';
+        }
+
+        document.getElementById("agree-checkbox").addEventListener("change", checkAgreement);
+        document.getElementById("read-checkbox").addEventListener("change", checkAgreement);
+
+        function checkAgreement() {
+            const readChecked = document.getElementById("read-checkbox").checked;
+            const agreeChecked = document.getElementById("agree-checkbox").checked;
+            document.getElementById("agree-button").disabled = !(readChecked && agreeChecked);
+        }
+
+        document.getElementById("terms-form").addEventListener("submit", function() {
+            localStorage.setItem('termsAccepted', 'true');
+        });
+    </script>
+</body>
+</html>
 

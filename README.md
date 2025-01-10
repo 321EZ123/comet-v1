@@ -1,2 +1,4 @@
-# pxlnova-V2-
-bio i guess cant make my own lol
+# comet-2
+(coming soon)
+
+MADE BY (bolt network and xezter/cipher)

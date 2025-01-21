@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Comet-Tube</title>
+  <link rel="stylesheet" href="cometube-styles.css">
+  <link rel="stylesheet" href="video-styles.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css">
+</head>
+<body>
+  <div class="stars" id="stars"></div>
+
+  <header>
+    <nav>
+      <div class="nav-left">
+        <a href="cometube.html">
+          <i class="ri-arrow-left-line"></i>
+          Back to Videos
+        </a>
+        <div class="nav-brand">
+          <span class="comet-icon">☄️</span>
+          <span>Comet-Tube</span>
+        </div>
+      </div>
+      <div class="nav-right">
+        <div class="time-display" id="timeDisplay">
+          <i class="ri-moon-line"></i>
+          <span>12:00</span>
+        </div>
+        <a href="settings.html">
+          <i class="ri-settings-3-line"></i>
+        </a>
+      </div>
+    </nav>
+  </header>
+
+  <main class="video-page">
+    <div class="video-container">
+      <div id="player"></div>
+      <div class="video-details">
+        <h1 id="videoTitle">Loading...</h1>
+        <div class="video-meta">
+          <span id="viewCount">0 views</span>
+          <span id="publishDate"></span>
+        </div>
+        <div class="channel-info">
+          <img id="channelThumbnail" src="https://via.placeholder.com/48" alt="Channel thumbnail">
+          <div class="channel-details">
+            <h3 id="channelTitle">Loading...</h3>
+            <span id="subscriberCount">0 subscribers</span>
+          </div>
+        </div>
+        <div class="video-description" id="description">
+          Loading description...
+        </div>
+      </div>
+    </div>
+
+    <div class="related-videos">
+      <h2>Related Videos</h2>
+      <div class="video-grid" id="relatedVideos">
+       
+      </div>
+    </div>
+  </main>
+
+  <script src="https://www.youtube.com/iframe_api"></script>
+  <script>
+   
+    function updateTime() {
+      const now = new Date();
+      const timeDisplay = document.getElementById('timeDisplay');
+      const icon = timeDisplay.querySelector('i');
+      const timeSpan = timeDisplay.querySelector('span');
+      
+      const hours = now.getHours();
+      const minutes = now.getMinutes();
+      const isPM = hours >= 12;
+      
+      if (hours >= 6 && hours < 18) {
+        icon.className = 'ri-sun-line';
+      } else {
+        icon.className = 'ri-moon-line';
+      }
+      
+      const displayHours = hours % 12 || 12;
+      const displayMinutes = minutes.toString().padStart(2, '0');
+      timeSpan.textContent = `${displayHours}:${displayMinutes} ${isPM ? 'PM' : 'AM'}`;
+    }
+
+    updateTime();
+    setInterval(updateTime, 60000);
+
+    
+    let player;
+    function onYouTubeIframeAPIReady() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const videoId = urlParams.get('v');
+
+      if (!videoId) {
+        window.location.href = 'cometube.html';
+        return;
+      }
+
+      player = new YT.Player('player', {
+        height: '100%',
+        width: '100%',
+        videoId: videoId,
+        playerVars: {
+          autoplay: 1,
+          modestbranding: 1,
+          rel: 0
+        },
+        events: {
+          'onReady': onPlayerReady,
+          'onStateChange': onPlayerStateChange
+        }
+      });
+
+      
+      fetch(`https://www.googleapis.com/youtube/v3/videos?id=${videoId}&part=snippet,statistics&key=AIzaSyDFL6MUF_IQrXfiJdhBXJp_pLov1VFiTSY`)
+        .then(response => response.json())
+        .then(data => {
+          const video = data.items[0];
+          document.getElementById('videoTitle').textContent = video.snippet.title;
+          document.getElementById('viewCount').textContent = `${parseInt(video.statistics.viewCount).toLocaleString()} views`;
+          document.getElementById('publishDate').textContent = new Date(video.snippet.publishedAt).toLocaleDateString();
+          document.getElementById('description').textContent = video.snippet.description;
+          
+          
+          return fetch(`https://www.googleapis.com/youtube/v3/channels?id=${video.snippet.channelId}&part=snippet,statistics&key=AIzaSyDFL6MUF_IQrXfiJdhBXJp_pLov1VFiTSY`);
+        })
+        .then(response => response.json())
+        .then(data => {
+          const channel = data.items[0];
+          document.getElementById('channelTitle').textContent = channel.snippet.title;
+          document.getElementById('subscriberCount').textContent = `${parseInt(channel.statistics.subscriberCount).toLocaleString()} subscribers`;
+          document.getElementById('channelThumbnail').src = channel.snippet.thumbnails.default.url;
+        });
+    }
+
+    function onPlayerReady(event) {
+      event.target.playVideo();
+    }
+
+    function onPlayerStateChange(event) {
+      
+    }
+  </script>
+</body>
+</html>

@@ -78,7 +78,7 @@
   margin-bottom: 1.5rem;
 }
 
-/* Responsive Design */
+
 @media (max-width: 1200px) {
   .video-page {
     grid-template-columns: 1fr;

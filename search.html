@@ -13,13 +13,14 @@
   <header>
     <nav>
       <div class="nav-left">
-        <a href="index.html">Home</a>
+        
         <a href="#" class="active">Search</a>
       </div>
       <div class="nav-right">
-        <a href="#" class="theme-toggle" id="themeToggle">
+        <div class="time-display" id="timeDisplay">
           <i class="ri-moon-line"></i>
-        </a>
+          <span>12:00</span>
+        </div>
         <a href="settings.html">
           <i class="ri-settings-3-line"></i>
         </a>
@@ -46,23 +47,64 @@
           </button>
         </div>
         <div class="search-buttons">
-          <button type="submit" class="search-btn">extensions</button>
-          <button type="button" class="search-btn">games</button>
+          <button type="submit" class="search-btn">Comet Search</button>
+          <button type="button" class="search-btn">I'm Feeling Lucky</button>
         </div>
       </form>
 
-      <div class="quick-settings">
-        <div class="setting-item">
-          <i class="ri-shield-check-line"></i>
-          <span>Privacy Mode: On</span>
+      <div class="quick-links">
+        <a href="cometube.html" class="quick-link">
+          <i class="ri-video-line"></i>
+          <span>CometTube</span>
+          <span class="quick-link-desc">Watch videos & shorts</span>
+        </a>
+        <a href="games.html" class="quick-link">
+          <i class="ri-gamepad-line"></i>
+          <span>Games</span>
+          <span class="quick-link-desc">Play classic & modern games</span>
+        </a>
+        <a href="store.html" class="quick-link">
+          <i class="ri-store-line"></i>
+          <span>Store</span>
+          <span class="quick-link-desc">Apps & Extensions</span>
+        </a>
+        <a href="settings.html" class="quick-link">
+          <i class="ri-palette-line"></i>
+          <span>Themes</span>
+          <span class="quick-link-desc">Customize your experience</span>
+        </a>
+      </div>
+
+      <div class="featured-section">
+        <div class="section-header">
+          <h2>Featured Games</h2>
+          <a href="games.html" class="view-all">View All</a>
         </div>
-        <div class="setting-item">
-          <i class="ri-global-line"></i>
-          <span>Region: Auto</span>
+        <div class="game-categories">
+          <button class="category-btn active">Classic</button>
+          <button class="category-btn">Multiplayer</button>
+          <button class="category-btn">Racing</button>
+          <button class="category-btn">Action</button>
         </div>
-        <div class="setting-item">
-          <i class="ri-filter-3-line"></i>
-          <span>Safe Search: On</span>
+        <div class="game-grid">
+          <a href="games/pacman.html" class="game-card">
+            <div class="game-icon">🟡</div>
+            <span>Pacman</span>
+          </a>
+          <a href="games/tictactoe.html" class="game-card">
+            <div class="game-icon">⭕</div>
+            <span>Tic Tac Toe</span>
+          </a>
+          <a href="games/checkers.html" class="game-card">
+            <div class="game-icon">⚫</div>
+            <span>Checkers</span>
+          </a>
+          <a href="games.html" class="game-card more">
+            <div class="game-icon">
+              <i class="ri-more-2-fill"></i>
+            </div>
+            <span>More Games</span>
+          </a>
         </div>
       </div>
     </div>
@@ -76,11 +118,9 @@
       <a href="#">Terms</a>
     </div>
     <div class="footer-right">
-      <a href="#">Settings</a>
+      <a href="settings.html">Settings</a>
       <a href="#">Help</a>
     </div>
   </footer>
-
-  <script src="search.js"></script>
 </body>
 </html>

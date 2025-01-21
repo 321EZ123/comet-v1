@@ -1,0 +1,96 @@
+/* Video Page Styles */
+.video-page {
+  max-width: 1800px;
+  margin: 0 auto;
+  padding: 2rem;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 2rem;
+}
+
+.video-container {
+  background: var(--card-bg);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+#player {
+  aspect-ratio: 16/9;
+  width: 100%;
+}
+
+.video-details {
+  padding: 1.5rem;
+}
+
+.video-details h1 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.video-meta {
+  display: flex;
+  gap: 1rem;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  margin-bottom: 1.5rem;
+}
+
+.channel-info {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.channel-info img {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+}
+
+.channel-details h3 {
+  font-size: 1rem;
+  margin-bottom: 0.25rem;
+}
+
+.channel-details span {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+.video-description {
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  white-space: pre-wrap;
+}
+
+.related-videos {
+  background: var(--card-bg);
+  border-radius: 12px;
+  padding: 1.5rem;
+}
+
+.related-videos h2 {
+  margin-bottom: 1.5rem;
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+  .video-page {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .video-page {
+    padding: 1rem;
+  }
+  
+  .video-details h1 {
+    font-size: 1.2rem;
+  }
+}

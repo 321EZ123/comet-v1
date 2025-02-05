@@ -1,1 +1,419 @@
-coming soon hehe
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comet Browser - Dashboard</title>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        :root {
+            --primary-color: #6200ff;
+            --primary-glow: #4c02f7;
+            --secondary-color: #8502f7;
+            --text-color: #ffffff;
+            --text-secondary: #9aa0a6;
+            --background: #0a0a0a;
+            --card-bg: rgba(32, 33, 36, 0.8);
+            --hover-bg: rgba(138, 180, 248, 0.08);
+            --border-color: rgba(95, 99, 104, 0.3);
+            --shadow-color: rgba(98, 0, 255, 0.1);
+            --error-color: #ff4444;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--background);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Stars Background Animation */
+        .stars {
+            position: fixed;
+            inset: 0;
+            background: radial-gradient(2px 2px at 20px 30px, #eee, rgba(0,0,0,0)),
+                        radial-gradient(2px 2px at 40px 70px, #fff, rgba(0,0,0,0)),
+                        radial-gradient(1px 1px at 90px 40px, #fff, rgba(0,0,0,0));
+            background-repeat: repeat;
+            animation: twinkle 7s linear infinite;
+            opacity: 0.3;
+            z-index: -1;
+        }
+
+        @keyframes twinkle {
+            from { transform: translateY(0); }
+            to { transform: translateY(-100px); }
+        }
+
+        .container {
+            width: 100%;
+            max-width: 400px;
+            padding: 2rem;
+            position: relative;
+        }
+
+        .auth-card {
+            background-color: var(--card-bg);
+            padding: 2.5rem;
+            border-radius: 1.5rem;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            border: 1px solid var(--border-color);
+            backdrop-filter: blur(10px);
+            animation: slideUp 0.5s ease-out;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .auth-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--primary-color);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4),
+                       0 0 30px var(--primary-glow);
+        }
+
+        .auth-card::before {
+            content: '';
+            position: absolute;
+            top: -100%;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                180deg,
+                transparent,
+                rgba(255, 255, 255, 0.1),
+                transparent
+            );
+            transition: 0.5s;
+        }
+
+        .auth-card:hover::before {
+            top: 100%;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .logo-container {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .logo {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .logo:hover {
+            transform: scale(1.1) rotate(15deg);
+            color: var(--primary-glow);
+            filter: drop-shadow(0 0 20px var(--primary-glow));
+        }
+
+        .logo-container h1 {
+            font-size: 1.8rem;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 0.5rem;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .logo-container h1:hover {
+            letter-spacing: 1px;
+            text-shadow: 0 0 20px var(--primary-glow);
+        }
+
+        .tabs {
+            display: flex;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid var(--border-color);
+            position: relative;
+        }
+
+        .tab {
+            flex: 1;
+            padding: 1rem;
+            text-align: center;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tab::before {
+            content: '';
+            position: absolute;
+            left: -100%;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255, 255, 255, 0.1),
+                transparent
+            );
+            transition: 0.5s;
+        }
+
+        .tab:hover::before {
+            left: 100%;
+        }
+
+        .tab.active {
+            color: white;
+            font-weight: 500;
+        }
+
+        .tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--primary-color);
+            animation: slideIn 0.3s ease-out;
+        }
+
+        @keyframes slideIn {
+            from { transform: scaleX(0); }
+            to { transform: scaleX(1); }
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text-secondary);
+            transition: all 0.3s;
+        }
+
+        .form-group:focus-within label {
+            color: var(--primary-color);
+            transform: translateX(5px);
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            border: 2px solid var(--border-color);
+            background-color: rgba(55, 65, 81, 0.3);
+            color: white;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            background-color: rgba(75, 85, 99, 0.3);
+            box-shadow: 0 0 15px var(--shadow-color);
+        }
+
+        .button {
+            width: 100%;
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            border: none;
+            background-color: var(--primary-color);
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .button:hover {
+            background-color: var(--primary-glow);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px var(--shadow-color),
+                       0 0 20px var(--primary-glow);
+        }
+
+        .button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255, 255, 255, 0.2),
+                transparent
+            );
+            transition: 0.5s;
+        }
+
+        .button:hover::before {
+            left: 100%;
+        }
+
+        .guest-message {
+            text-align: center;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .guest-message i {
+            margin-bottom: 1rem;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .guest-message:hover i {
+            transform: scale(1.1) rotate(10deg);
+            filter: drop-shadow(0 0 10px var(--primary-glow));
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            margin-top: 1.5rem;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .back-link:hover {
+            color: white;
+            transform: translateX(-5px);
+        }
+
+        .back-link i {
+            transition: transform 0.3s;
+        }
+
+        .back-link:hover i {
+            transform: translateX(-3px);
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 1rem;
+            }
+
+            .auth-card {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="stars"></div>
+
+    <div class="container">
+        <div class="auth-card">
+            <div class="logo-container">
+                <i data-lucide="comet" class="logo" style="width: 48px; height: 48px;"></i>
+                <h1>Welcome to Comet</h1>
+            </div>
+
+            <div id="auth-content">
+                <!-- Content will be dynamically inserted here -->
+            </div>
+
+            <a href="index.html" class="back-link">
+                <i data-lucide="arrow-left" style="width: 16px; height: 16px;"></i>
+                Back to Home
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        // Check if user is accessing as guest
+        const urlParams = new URLSearchParams(window.location.search);
+        const isGuest = urlParams.get('guest') === 'true';
+
+        const authContent = document.getElementById('auth-content');
+
+        if (isGuest) {
+            // Show guest welcome message
+            authContent.innerHTML = `
+                <div class="guest-message">
+                    <i data-lucide="user" style="width: 48px; height: 48px; color: var(--primary-color);"></i>
+                    <h2>Welcome, Guest!</h2>
+                    <p style="color: var(--text-secondary); margin: 1rem 0;">You're browsing Comet as a guest user. Some features may be limited.</p>
+                    <button class="button" onclick="window.location.href='dash.html'">Sign up for full access</button>
+                </div>
+            `;
+        } else {
+            // Show auth form
+            authContent.innerHTML = `
+                <div class="tabs">
+                    <div class="tab active" onclick="switchTab('login')">Login</div>
+                    <div class="tab" onclick="switchTab('signup')">Sign Up</div>
+                </div>
+                <form id="auth-form" onsubmit="handleSubmit(event)">
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" required>
+                    </div>
+                    <button type="submit" class="button">Login</button>
+                </form>
+            `;
+        }
+
+        
+        lucide.createIcons();
+
+        function switchTab(tab) {
+            const tabs = document.querySelectorAll('.tab');
+            const button = document.querySelector('.button');
+            tabs.forEach(t => t.classList.remove('active'));
+            event.target.classList.add('active');
+            button.textContent = tab === 'login' ? 'Login' : 'Sign Up';
+        }
+
+        function handleSubmit(event) {
+            event.preventDefault();
+            
+            
+            
+        }
+    </script>
+</body>
+</html>
